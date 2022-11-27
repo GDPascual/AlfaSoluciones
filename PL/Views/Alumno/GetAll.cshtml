@@ -1,0 +1,84 @@
+﻿@model ML.Alumno
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Alumno</h1>
+
+
+<br>
+
+<div class="row" :>
+    <div class="col-md-12 col-sm-3">
+        @Html.ActionLink("+", "Form", "Alumno", htmlAttributes: new {  @class = "btn btn-success " })
+</div>
+</div>
+
+<br>
+
+<table class="table table-bordered table-responsive" id="tblAlumno">
+    <thead>
+        <tr>
+
+            <td>Editar</td>
+            <td class="visually-hidden">IdAlumno</td>
+            <td>Nombre</td>
+            <td>Edad</td>
+            <td>Genero</td>
+            <td>Fecha Nacimiento</td>
+            <td class="visually-hidden">IdBeca</td>
+            <td>Beca</td>
+            <td>Eliminar</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ML.Alumno alumno in Model.Alumnos)
+        {
+            <tr>
+                <td><a class="btn btn-warning bi bi-pencil-square" href="@Url.Action("Form", "Alumno", new { IdAlumno = alumno.IdAlumno })"></a></td>
+                <td class="visually-hidden">@alumno.IdAlumno</td>
+                <td>@alumno.Nombre @alumno.ApellidoPaterno @alumno.ApellidoMaterno </td>
+                <td>@alumno.Edad</td>
+                <td>@alumno.Genero</td>
+                <td>@alumno.FechaNacimiento.ToString("dd-MM-yyyy")</td>
+                <td class="visually-hidden">@alumno.Beca.IdBeca</td>
+                <td>@alumno.Beca.Tipo</td>
+
+                <td><a class="btn btn-danger bi bi-trash3-fill" href="@Url.Action("Delete", "Alumno", new { IdAlumno = alumno.IdAlumno })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@section Scripts
+    {
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.material.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#tblAlumno').DataTable({
+                searching: true,
+                "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]],
+                autoWidth: false,
+                columnDefs: [
+                    {
+                        targets: ['_all'],
+                        className: 'mdc-data-table__cell',
+                    },
+                ],
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                },
+            });
+        });
+
+
+    </script>
+
+}

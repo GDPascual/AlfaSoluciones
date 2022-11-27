@@ -1,0 +1,132 @@
+﻿@model ML.Alumno
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12">
+            <h2>Alumno</h2>
+            <h5>Ingrese los datos del alumno:</h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @*Crea un salto de linea*@
+            <hr />
+        </div>
+    </div>
+</div>
+
+    <div class="row">
+
+        @using (Html.BeginForm("Form", "Alumno", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+
+
+
+            <div class="col" style="display: none;">
+                @Html.LabelFor(model => model.IdAlumno)
+                @Html.TextBoxFor(model => model.IdAlumno, new { @class = "form-control", @id = "txtIdAlumno" })
+                @Html.ValidationMessageFor(model => model.IdAlumno)
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col">
+                    @Html.LabelFor(model => model.Nombre)
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="bi bi-file-person"></i></span>
+                        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre" })
+                        @Html.ValidationMessageFor(model => model.Nombre)
+                    </div>
+                </div>
+
+
+                <div class="col">
+                    @Html.LabelFor(model => model.ApellidoPaterno)
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="bi bi-file-person"></i></span>
+                        @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno" })
+                        @Html.ValidationMessageFor(model => model.ApellidoPaterno)
+                    </div>
+                </div>
+
+                <div class="col">
+                    @Html.LabelFor(model => model.ApellidoMaterno)
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="bi bi-file-person"></i></span>
+                        @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno" })
+                        @Html.ValidationMessageFor(model => model.ApellidoMaterno)
+                    </div>
+                </div>
+
+            
+                <div class="col">
+                    @Html.LabelFor(model => model.Genero)
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="bi bi-file-person"></i></span>
+                        @Html.TextBoxFor(model => model.Genero, new { @class = "form-control", @id = "txtGenero" })
+                        @Html.ValidationMessageFor(model => model.Genero)
+                    </div>
+                </div>
+
+               
+
+                <div class="col">
+                    @Html.LabelFor(model => model.FechaNacimiento)
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="bi bi-calendar-date-fill"></i></span>
+                    @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", @id = "txtFechaNacimiento" ,type = "date"   })
+                        @Html.ValidationMessageFor(model => model.FechaNacimiento)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    @Html.LabelFor(model => model.Edad)
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
+                        @Html.TextBoxFor(model => model.Edad, new { @class = "form-control", @id = "txtEdad", @onkeypress = "SoloNumeros(event, 'lblEdad')" })
+                        @Html.ValidationMessageFor(model => model.Edad)
+                    </div>
+                    @Html.Label("", null, new { @id = "lblEdad" })
+                </div>
+
+            <div class="col">
+                @Html.LabelFor(model => model.Beca)
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
+                    @Html.DropDownListFor(model => model.Beca.IdBeca, new SelectList(Model.Beca.Becas, "IdBeca", "Tipo"), "Selecciona una opción", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Beca.IdBeca)
+                </div>               
+            </div>
+
+               
+
+
+
+                <div class="col">
+                    <div class="col">
+                        <input type="submit" value="Guardar" class="btn btn-success" />
+                        @Html.ActionLink("Regresar", "GetAll", "Alumno", htmlAttributes: new { @class = "btn btn-danger" })
+                    </div>
+                </div>
+
+
+            </div>
+
+    }
+    </div>
+
+
+        
