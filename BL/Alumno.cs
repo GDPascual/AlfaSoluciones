@@ -8,7 +8,7 @@
             try
             {
                 using (DL.DpascualAlfaSolucionesContext context = new DL.DpascualAlfaSolucionesContext())
-                
+
                 {
                     DL.Alumno alumnoLinq = new DL.Alumno();
 
@@ -19,8 +19,6 @@
                     alumnoLinq.Genero = alumno.Genero;
                     alumnoLinq.FechaNacimiento = alumno.FechaNacimiento;
                     alumnoLinq.IdBeca = alumno.Beca.IdBeca;
-                    //alumnoLinq.IdBecaNavigation = new DL.Beca();
-                    //alumnoLinq.IdBecaNavigation.IdBeca = alumno.Beca.IdBeca;
 
                     if (alumnoLinq != null)
                     {
@@ -87,12 +85,12 @@
             {
                 using (DL.DpascualAlfaSolucionesContext context = new DL.DpascualAlfaSolucionesContext())
                 {
-                    
+
                     var query = (from a in context.Alumnos
                                  where a.IdAlumno == IdAlumno
                                  select a).FirstOrDefault();
 
-                  
+
                     if (query != null)
                     {
                         context.Alumnos.Remove(query);
@@ -120,10 +118,10 @@
                 using (DL.DpascualAlfaSolucionesContext context = new DL.DpascualAlfaSolucionesContext())
                 {
                     var alumnos = (from alumnoLinq in context.Alumnos
-                                  join becaLinq in context.Becas on alumnoLinq.IdBecaNavigation.IdBeca equals becaLinq.IdBeca
-                                  join becaLinq2 in context.Becas on alumnoLinq.IdBeca equals becaLinq2.IdBeca
+                                   join becaLinq in context.Becas on alumnoLinq.IdBecaNavigation.IdBeca equals becaLinq.IdBeca
+                                   join becaLinq2 in context.Becas on alumnoLinq.IdBeca equals becaLinq2.IdBeca
                                    select new
-                                   { 
+                                   {
                                        IdAlumno = alumnoLinq.IdAlumno,
                                        Nombre = alumnoLinq.Nombre,
                                        ApellidoPaterno = alumnoLinq.ApellidoPaterno,
@@ -152,7 +150,7 @@
                             alumno.Beca = new ML.Beca();
                             alumno.Beca.IdBeca = objAlumno.IdBeca.Value;
                             alumno.Beca.Tipo = objAlumno.Tipo;
-                           
+
                             result.Objects.Add(alumno);
                         }
                         result.Correct = true;

@@ -19,17 +19,17 @@ public partial class DpascualAlfaSolucionesContext : DbContext
 
     public virtual DbSet<Beca> Becas { get; set; }
 
+    public virtual DbSet<Usuario> Usuarios { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=WIN-PC-ISAAC; Database=DPascualAlfaSoluciones; Trusted_Connection=True; TrustServerCertificate=True; Integrated Security=True;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=LAPTOP-CTC7VEPU; Database= DPascualAlfaSoluciones; Trusted_Connection=True; TrustServerCertificate=True; User ID=sa; Password=pass@word1;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
-
         modelBuilder.Entity<Alumno>(entity =>
         {
-            entity.HasKey(e => e.IdAlumno).HasName("PK__Alumno__460B4740314CB3AE");
+            entity.HasKey(e => e.IdAlumno).HasName("PK__Alumno__460B4740DD299AC0");
 
             entity.ToTable("Alumno");
 
@@ -46,18 +46,32 @@ public partial class DpascualAlfaSolucionesContext : DbContext
 
             entity.HasOne(d => d.IdBecaNavigation).WithMany(p => p.Alumnos)
                 .HasForeignKey(d => d.IdBeca)
-                .HasConstraintName("FK__Alumno__IdBeca__3A81B327");
+                .HasConstraintName("FK__Alumno__IdBeca__145C0A3F");
         });
 
         modelBuilder.Entity<Beca>(entity =>
         {
-            entity.HasKey(e => e.IdBeca).HasName("PK__Beca__23D228E0D8545CFA");
+            entity.HasKey(e => e.IdBeca).HasName("PK__Beca__23D228E0A8B204FF");
 
             entity.ToTable("Beca");
 
             entity.Property(e => e.IdBeca).ValueGeneratedOnAdd();
             entity.Property(e => e.Tipo)
                 .HasMaxLength(20)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Usuario>(entity =>
+        {
+            entity.HasKey(e => e.IdUsuario).HasName("PK__Usuario__5B65BF9721C997B3");
+
+            entity.ToTable("Usuario");
+
+            entity.Property(e => e.Clave)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Username)
+                .HasMaxLength(50)
                 .IsUnicode(false);
         });
 

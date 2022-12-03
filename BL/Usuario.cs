@@ -1,47 +1,50 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace BL
 {
-    public class Beca
+    public class Usuario
     {
-        public static ML.Result GetAll()
+        public static ML.Result GetByUsername(string IdUsername)
         {
             ML.Result result = new ML.Result();
             try
             {
                 using (DL.DpascualAlfaSolucionesContext context = new DL.DpascualAlfaSolucionesContext())
                 {
-                    var becas = (from becaLinq in context.Becas
-                                 select becaLinq).ToList();
-
-                    if (becas != null)
+                    var query = context.Usuarios.FromSqlRaw($"UsuarioGetByIdUser '{IdUsername}' ").AsEnumerable().FirstOrDefault();
+                    if (query != null)
                     {
-                        result.Objects = new List<object>();
-                        foreach (var objBeca in becas)
-                        {
-                            ML.Beca beca = new ML.Beca();
-                            beca.IdBeca = objBeca.IdBeca;
-                            beca.Tipo = objBeca.Tipo;
+                        ML.Usuario usuario = new ML.Usuario();
+                        
+                        usuario.Clave = query.Clave;
+                        usuario.IdUsuario = query.IdUsuario;
+                        usuario.Username = query.Username;
 
-                            result.Objects.Add(beca);
-                        }
+
+                        result.Object = usuario;
                         result.Correct = true;
+
                     }
                     else
                     {
                         result.Correct = false;
+                        result.ErrorMessage = " Ocurrio un error ";
                     }
+
                 }
+
+
             }
             catch (Exception ex)
             {
                 result.Correct = false;
                 result.ErrorMessage = ex.Message;
-
             }
             return result;
         }

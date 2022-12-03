@@ -86,7 +86,7 @@ namespace PL.Controllers
                             ML.Alumno resultItemList = new ML.Alumno();
                             resultItemList = Newtonsoft.Json.JsonConvert.DeserializeObject<ML.Alumno>(readTask.Result.Object.ToString());
                             alumno.Beca = new ML.Beca();
-                            
+
                             alumno = resultItemList;
                             alumno.Beca.Becas = resultBecas.Objects;
 
